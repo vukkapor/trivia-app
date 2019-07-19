@@ -7,7 +7,9 @@
         :value="category.id"
       >{{category.title}}</option>
     </select>
-    <ul v-for="trivia in trivias" :key="trivia.id">
+    <label for="input">Search trivia</label>
+    <input type="text" v-model="input" />
+    <ul v-for="trivia in filteredList" :key="trivia.id">
       <hr />
       <h4>{{trivia.question}}</h4>
       <button @click="showAnswer(trivia.id)">Odgovor</button>
@@ -22,7 +24,8 @@ export default {
   data() {
     return {
       visibileTrivia: null,
-      selectedCategory: null
+      selectedCategory: null,
+      input: ""
     };
   },
   methods: {
@@ -43,7 +46,12 @@ export default {
     ...mapGetters("TriviaStoreModule", {
       trivias: "getTrivias",
       triviaCategories: "getTriviaCategories"
-    })
+    }),
+    filteredList() {
+      return this.trivias.filter(trivia =>
+        trivia.question.toLowerCase().includes(this.input.toLowerCase())
+      );
+    }
   }
 };
 </script>
