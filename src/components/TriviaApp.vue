@@ -1,5 +1,12 @@
 <template>
   <div>
+    <select v-model="selectedCategory" @click="fetchTriviaByCategory(selectedCategory)">
+      <option
+        v-for="category in triviaCategories"
+        :key="category.id"
+        :value="category.id"
+      >{{category.title}}</option>
+    </select>
     <ul v-for="trivia in trivias" :key="trivia.id">
       <hr />
       <h4>{{trivia.question}}</h4>
@@ -14,12 +21,15 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
-      visibileTrivia: null
+      visibileTrivia: null,
+      selectedCategory: null
     };
   },
   methods: {
     ...mapActions("TriviaStoreModule", {
-      fetchTrivias: "fetchTrivias"
+      fetchTrivias: "fetchTrivias",
+      fetchTriviaCategories: "fetchTriviaCategories",
+      fetchTriviaByCategory: "fetchTriviaByCategory"
     }),
     showAnswer(id) {
       this.visibileTrivia = id;
@@ -27,10 +37,12 @@ export default {
   },
   created() {
     this.fetchTrivias();
+    this.fetchTriviaCategories();
   },
   computed: {
     ...mapGetters("TriviaStoreModule", {
-      trivias: "getTrivias"
+      trivias: "getTrivias",
+      triviaCategories: "getTriviaCategories"
     })
   }
 };
