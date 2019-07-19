@@ -6,7 +6,7 @@
       <ul class="navbar-nav">
         <li class="nav-item active">
           <a class="nav-link" href="#">
-            <router-link>Nesto</router-link>
+            <router-link class="navbar-brand" to="/chuck">Chuck</router-link>
           </a>
         </li>
       </ul>
