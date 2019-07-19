@@ -37,7 +37,7 @@ export default {
   },
 
   beforeRouteEnter(to, from, next) {
-    store
+    return store
       .dispatch("ChuckStoreModule/fetchJoke")
       .then(() => {
         next();

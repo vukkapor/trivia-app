@@ -18,7 +18,7 @@ export const ChuckStoreModule = {
   },
   actions: {
     fetchJoke(context, category) {
-      ChuckService.getJoke(category)
+      return ChuckService.getJoke(category)
         .then(response => {
           context.commit('setJoke', response.value)
         }).catch(e => {
