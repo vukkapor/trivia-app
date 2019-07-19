@@ -1,21 +1,34 @@
 <template>
   <div>
-    <!-- <button @click="fetchJoke">Display joke</button> -->
     {{joke}}
+    <br />
+    <button @click="fetchNewJoke(category)">New joke</button>
+    <br />Category:
+    <input type="text" v-model="category" />
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import store from "../store/";
 
 export default {
+  data() {
+    return {
+      category: ""
+    };
+  },
   // created() {
   //   this.fetchJoke();
   // },
   methods: {
     ...mapActions("ChuckStoreModule", {
       fetchJoke: "fetchJoke"
-    })
+    }),
+
+    fetchNewJoke(category) {
+      this.fetchJoke(category);
+    }
   },
   computed: {
     ...mapGetters("ChuckStoreModule", {
@@ -24,9 +37,14 @@ export default {
   },
 
   beforeRouteEnter(to, from, next) {
-    next(vm => {
-      vm.$store.dispatch("ChuckStoreModule/fetchJoke");
-    });
+    store
+      .dispatch("ChuckStoreModule/fetchJoke")
+      .then(() => {
+        next();
+      })
+      .catch(e => {
+        alert(e);
+      });
   }
 };
 </script>

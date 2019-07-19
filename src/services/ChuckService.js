@@ -5,8 +5,8 @@ class chuckService {
     this.client = new ChuckNorris()
   }
 
-  getJoke() {
-    return this.client.getRandomJoke();
+  getJoke(category) {
+    return this.client.getRandomJoke(category);
   }
 }
 
